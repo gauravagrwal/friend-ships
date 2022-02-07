@@ -1,4 +1,4 @@
-import { LightningElement, wire } from 'lwc';
+import { LightningElement, wire, track } from 'lwc';
 import getBoatTypes from '@salesforce/apex/BoatDataService.getBoatTypes'
 
 export default class BoatSearchForm extends LightningElement {
@@ -7,6 +7,7 @@ export default class BoatSearchForm extends LightningElement {
     // Private
     error = undefined;
 
+    @track
     searchOptions;
 
     @wire(getBoatTypes)

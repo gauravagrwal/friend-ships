@@ -20,8 +20,10 @@ const BOAT_FIELDS = [BOAT_ID_FIELD, BOAT_NAME_FIELD];
 
 export default class BoatDetailTabs extends NavigationMixin(LightningElement) {
     boatId;
+
     @wire(getRecord, { recordId: '$boatId', fields: BOAT_FIELDS })
     wiredRecord;
+
     @wire(MessageContext)
     messageContext;
 
@@ -36,10 +38,7 @@ export default class BoatDetailTabs extends NavigationMixin(LightningElement) {
     // Decide when to show or hide the icon
     // returns 'utility:anchor' or null
     get detailsTabIconName() {
-        if (this.wiredRecord.data)
-            return 'utilityLanchor';
-
-        return null;
+        return this.wiredRecord.data ? 'utility:anchor' : null;
     }
 
     // Utilize getFieldValue to extract the boat name from the record wire
@@ -56,7 +55,7 @@ export default class BoatDetailTabs extends NavigationMixin(LightningElement) {
         this.subscription = subscribe(
             this.messageContext,
             BOATMC,
-            (message) => this.boatId = message.recordId,
+            (message) => { this.boatId = message.recordId },
             { scope: APPLICATION_SCOPE }
         );
     }
